@@ -1,0 +1,190 @@
+---
+title: A University of Warwick Presentation
+subtitle: Subtitle
+author: Your Name
+date: last-modified
+date-format: long
+footer: <https://warwick-stats-resources.github.io>
+format:
+  warwickpres-revealjs: default
+---
+
+## Introduction
+
+This is a Quarto presentation format that is consistent with The University of Warwick's [brand](https://brand.warwick.ac.uk/), especially its [colours](https://brand.warwick.ac.uk/en/brand-guidelines/design-elements/#315) and [typography](https://brand.warwick.ac.uk/en/brand-guidelines/design-elements/#1149).
+
+. . .
+
+
+:::{.notes}
+Speaker notes go here.
+:::
+
+# Colour backgrounds for new sections {.lavendar-bg}
+
+## {.green-bg .center-h .center .larger200}
+
+Or stressing **key points**
+
+# Blue background {.blue-bg}
+
+# Yellow background {.yellow-bg}
+
+# Coral background {.coral-bg}
+
+## Text highlights
+
+Hightlight key words with a `.{color}` class, where `color` is one of: 
+
+- [lavendar]{.lavendar}
+- [coral]{.coral}
+- [green]{.green}
+- [blue]{.blue}
+- [yellow]{.yellow}
+
+## Additional colours
+
+There's a colour for inline code such as `x <- c(1, 3, 6)` and `{.lavendar-bg}`.
+
+There's also a colour for short [links](https://github.com/Warwick-Stats-Resources/warwickpres) and full ones like <https://quarto.org/docs/presentations/revealjs/>.
+
+## Typography
+
+The University of Warwick brand font is **Neue Haas Grotesk**, which is available as part of Adobe Creative Suite.
+
+The preferred substitute font is **Aptos**, which is available in Microsoft apps.
+
+Neither of these are freely available for use with Quarto.
+
+This format therefore uses Warwick's final approved substitute font: **Arial**.
+
+## Code
+
+The extension includes a custom syntax highlighting theme:
+
+```{r}
+#| echo: true
+#| eval: false
+library(dplyr)
+
+penguins %>%
+  mutate(
+    long_flipper = case_when(
+      species == "Adelie" & flipper_len > 195 ~ TRUE,
+      species == "Chinstrap" & flipper_len > 200 ~ TRUE,
+      species == "Gentoo" & flipper_len > 225 ~ TRUE,
+      TRUE ~ FALSE
+    )
+  ) %>%
+  mutate(
+    body_mass_kg = body_mass / 1000,
+    bill_len_cm = bill_len / 10,
+    bill_dep_cm = bill_dep / 10
+  )
+```
+
+
+## Callouts {.smaller90}
+
+There are custom colours for callouts: 
+
+:::{.callout-note}
+A note
+:::
+
+:::{.callout-warning}
+A warning
+:::
+
+:::{.callout-important}
+Something important
+:::
+
+:::{.callout-tip}
+This is a good idea
+:::
+
+:::{.callout-caution}
+Be careful about doing this
+:::
+
+
+## Columns with backgrounds
+
+Use class `.col-box-{color}` to apply colour box styling, e.g. `.col-box-lavendar`
+
+::: {columns}
+::: {.column .col-box-lavendar width="32%"}
+Box 1: lavendar
+
+Default height is 450px
+:::
+
+::: {.column .col-box-green width="32%"}
+Box 2: green
+
+:::
+
+::: {.column .col-box-blue width="32%"}
+Box 3: blue
+:::
+:::
+
+## Columns with backgrounds: tall and short
+
+::::: {columns}
+:::: {.column .col-box-green-tall width="49%"}
+Colour box styling can be applied to entire columns
+
+This has height 600px and class `.col-box-green-tall`
+::::
+
+:::: {.column width="49%"}
+:::{.col-box-coral-short}
+Or to divs within columns to create stacks
+:::
+
+:::{.col-box-yellow-short}
+This div has height 300px and class `.col-box-yellow-short`
+:::
+
+::::
+
+:::::
+
+
+# Non-Warwick-specific nice-to-haves {.green-bg}
+
+## Alignment
+
+There are classes to help with text alignment:
+
+:::{.center-h}
+`{.center-h}` gives horizontally-centered text
+:::
+
+:::{.right}
+`{.right}` gives right-aligned text
+:::
+
+:::{.callout-note}
+For all revealjs Quarto presentations, applying `{.center}` to the slide title vertically centers the whole slide.
+:::
+
+## Sizing
+
+There are classes to help size text by a given percentage:
+
+[`{.smaller90}`]{.smaller90}, [`{.smaller80}`]{.smaller80}, [`{.smaller75}`]{.smaller75}
+[`{.smaller70}`]{.smaller70}, [`{.smaller60}`]{.smaller60}, [`{.smaller50}`]{.smaller50}
+
+[`{.larger125}`]{.larger125}, [`{.larger150}`]{.larger150}, [`{.larger175}`]{.larger175}, 
+[`{.larger200}`]{.larger200}, [`{.larger250}`]{.larger250}
+
+## More information
+
+You can learn more about Quarto Revealjs presentations at <https://quarto.org/docs/presentations/revealjs/>
+
+You can learn more about Quarto extensions at <https://quarto.org/docs/extensions/>
+
+You can find these slides at <https://warwick-stats-resources.github.io/warwickpres/>

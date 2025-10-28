@@ -1,0 +1,11 @@
+---
+title: Lowering Barriers to Contributing to R
+author: Heather Turner
+affiliation: University of Warwick
+date: "2025-12-04"
+date-format: long
+footer: <https://hturner.github.io/LatinR2025>
+format:
+  warwickpres-revealjs: default
+---
+

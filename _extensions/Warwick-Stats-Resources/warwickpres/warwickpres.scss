@@ -1,0 +1,240 @@
+/*-- scss:defaults --*/
+
+@import url(https://fonts.googleapis.com/css?family=Fira+Mono&display=swap);
+
+$font-family-sans-serif: Arial, sans-serif !default;
+$font-family-monospace: "Fira Mono", monospace;
+$headings-font-family: Arial, sans-serif !default;
+
+// Warwick colors 
+$lavendar: #A499F4;
+$purple: #440379;
+$coral: #F1977F; 
+$blue: #6CB7FF;
+$green: #51D7C1;
+$yellow: #FEDE7B;
+
+$black: #0C0C0C;
+$gray-mid: #9E9E9E;
+$gray-light: #CECECE;
+$white: #FDFCFC;
+
+// Different shades 
+$purple-bright: #693594;
+$blue-dark: #4C80B3;
+/*
+$lavendar-dark: #625C92;
+$coral-dark: #794C40; 
+$blue-dark: #416E99;
+$green-dark: #318174;
+$yellow-dark: #7F6F3E;
+*/
+
+$primary: $lavendar !default;
+
+$presentation-font-size-root: 32px;
+$code-block-font-size: .7em;
+$presentation-heading-font: $headings-font-family;
+$body-color: $black;
+$link-color: $blue-dark; 
+$code-color: $purple-bright; // with $purple, not quite enough differentiation from black 
+
+$callout-color-note: $blue;
+$callout-color-caution: $coral;
+$callout-color-tip: $green;
+$callout-color-warning: $yellow;
+$callout-color-important: $lavendar;
+
+/*-- scss:rules --*/
+
+// Create a map using color names
+$colors: (
+  'lavendar': $lavendar,
+  'coral': $coral,
+  'blue': $blue,
+  'green': $green,
+  'yellow': $yellow,
+);
+
+// color classes for highlighting text
+@mixin bg($padding: 5px 10px) {
+  font-weight: 700;
+  padding: $padding;
+}
+
+@each $name, $color in $colors {
+    .#{$name} {
+      @include bg;  
+      background-color: $color;
+    }
+}
+
+// color classes for slide backgrounds
+@each $name, $color in $colors {
+    .#{$name}-bg {
+      .slide-background-content {
+        background-color: $color;
+      }
+    }
+}
+
+/*
+Keep an inverse class for back-compatibility
+But don't document this.
+Prefer to use a variety of {color}-bg classes as section breaks
+and for stressing important points.
+*/
+.inverse {
+  .slide-background-content {
+    background-color: $lavendar;
+  }  
+}
+
+// mixin for boxes with height parameter
+@mixin box-style($height: 450px) {  // 450px is default value
+  border-radius: 25px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  height: $height;
+}
+
+// Generate styles for each box
+@each $name, $color in $colors {
+  .col-box-#{$name} {
+    @include box-style;  // uses default height
+    background: $color;
+  }
+  
+  // Create a tall variant
+  .col-box-#{$name}-tall {
+    @include box-style(550px);  
+    background: $color;
+  }
+
+  // Create a short variant
+  // two shorts with 10px gap stack to same height as tall 
+  .col-box-#{$name}-short {
+    @include box-style(270px);  
+    background: $color;
+  }
+}
+
+// Correct the alignment and spacing of the title in the callouts
+.reveal .callout {
+  .callout-title {
+    display: flex;
+    align-items: center;
+    
+    .callout-icon-container {
+      margin-right: 0.1rem;  // Add space after the icon
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      align-self: center;
+    }
+  }
+}
+
+// code
+pre.sourceCode {
+  border-radius: 0;
+  border-left-color: $gray-mid;
+}
+
+// title-slide
+/*
+#title-slide {
+  background-image: url('UoW_Wordmark_Positive_RGB.png');
+  background-size: 5%;
+  background-position: 5% 100%
+}
+*/
+
+/*
+#title-slide .title {
+  font-size: 70px;
+  padding-bottom: .25em;
+  color: $teal_bright;
+}
+*/
+
+#title-slide .subtitle {
+  margin-bottom: 6rem;
+}
+
+.reveal .quarto-title-block .quarto-title-authors {
+  display: block;
+}
+
+.reveal .quarto-title-block .quarto-title-authors .quarto-title-author {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0.5em;
+}
+
+// alignment and spacing
+.center-h {
+  text-align: center;
+}
+
+.right {
+  text-align: right;  
+}
+
+p {
+  padding-bottom: 12px;
+}
+
+.cell {
+  padding-bottom: 20px;
+}
+
+.reveal h2 {
+  padding-bottom: 20px;
+}
+
+// sizes
+.smaller90 { font-size: 90%; }
+.smaller80 { font-size: 80%; }
+.smaller75 { font-size: 75%; }
+.smaller70 { font-size: 70%; }
+.smaller60 { font-size: 60%; }
+.smaller50 { font-size: 50%; }
+.larger125 { font-size: 125%; }
+.larger150 { font-size: 150%; }
+.larger175 { font-size: 175%; }
+.larger200 { font-size: 200%; }
+.larger250 { font-size: 250%; }
+
+// figure caption
+.reveal .slide figure>figcaption, .reveal .slide img.stretch+p.caption, .reveal .slide img.r-stretch+p.caption {
+  font-size: 0.5em;
+}
+
+// tables
+.reveal table th, .reveal table td {
+    border-bottom: 1px solid;
+    border-color: $gray-light;
+}
+
+// keyboard
+kbd {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 5px 9px;
+  background: linear-gradient(178deg, #fff, #fff, #fff, #ddd);
+}
+
+// don't show page number on title-page
+.reveal .slide-number > a[href*='title-slide'] {
+  display: none;
+}
+
+.footer a {
+  color: $purple !important;
+}
