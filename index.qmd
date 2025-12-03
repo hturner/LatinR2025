@@ -17,10 +17,14 @@ format:
 :::{.fragment}
 1995: Martin Mächler (ETH Zurich) persuades Robert and Ross to release R under a GNU public license.
 :::
-:::{.fragment}
-... User community grows to millions world wide...
+:::{.incremental}
+* R developed more openly
+* User community grows to millions world wide
 :::
-:::{.fragment}
+
+<br>
+
+:::{.fragment .larger125}
 30 years as an open source project:  How can the community help to sustain R?
 :::
 
@@ -46,11 +50,29 @@ Error en help(c("mean", "sd")):
 ```
 :::
 
-## PO & POT Files
+## PO Files
+
+In the R sources, translations are stored in `.po` files, e.g.:
+
+```{.po filename="utils/po/R-es.po" code-line-numbers="true" startFrom=23}
+msgid "no documentation for %s found in package %s"
+msgstr "no se ha encontrado documentación para %s en el paquete %s"
+
+msgid "document not found"
+msgstr "El documento no se ha encontrado"
+```
+...
+```{.po filename="utils/po/R-es.po" code-line-numbers="true" startFrom=401}
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr ""
+
+msgid "No documentation for %s in specified packages and libraries:"
+msgstr ""
+```
 
 ## Translation via Weblate
 
-The Weblate instance at <https://translate.rx.studio> provides a user-friendly interface for contributing translations.
+The Weblate instance at <https://translate.rx.studio> set up by Gergely Daróczi provides a user-friendly interface for contributing translations.
 
 ```{r, out.width = "90%"}
 #| echo: false
@@ -94,7 +116,7 @@ knitr::include_graphics('images/weblate_packages.png')
 knitr::include_graphics('images/weblate_languages.png')
 ```
 
-- 27 (written) languages in current release of R, including Spanish and Brazilian Portuguese
+- 27 languages in current release of R, including Spanish and Brazilian Portuguese
 
 ## Translation interface
 
@@ -106,9 +128,9 @@ knitr::include_graphics('images/weblate_languages.png')
 knitr::include_graphics('images/weblate_translation_box.png')
 ```
 
-Enter the translation and "Suggest" (if unsure) or "Save and continue" (if confident).
+- Enter the translation and "Suggest" (if unsure) or "Save and continue" (if confident).
 
-Sidebar shows alerts and any relevant terms from glossary.
+- Sidebar shows alerts and any relevant terms from glossary.
 
 ## Machine translation
 
@@ -128,20 +150,20 @@ knitr::include_graphics('images/weblate_automatic_suggestions.png')
 :::{.columns}
 :::{.column width="45%"}
 ![](images/translators_pt_br_es.png){fig-alt="" width="100%"}
-![Top: Spanish & Brazilian Portuguese translators on Weblate. Bottom: LatinR 2023](images/latinr_2023_translation.jpg){fig-alt="" width="100%"}
+![](images/latinr_2023_translation.jpg){fig-alt="" width="100%"}
 [Top: Translators on Weblate. Bottom: Translators at LatinR 2023]{.smaller50}
 :::
 :::{.column width="55%"}
 
-* Many contributors from the LatinR community on Weblate
-* Several joined via contributor events e.g. at LatinR 2022 - 2024
+* Many Weblate contributors from the LatinR community
+* Several joined via contributor events, e.g., at LatinR 2022 - 2024
 * Big improvement in base R translations since Weblate set up in 2022:
     * Spanish: from 24% to 100% translated
     * Brazilian Portuguese: from 48% to 85% translated
 :::
 :::
 
-## Ongoing work
+## Further work
 
 * Translation of messages in recommended packages:
     * Spanish: 85% translated
@@ -149,6 +171,12 @@ knitr::include_graphics('images/weblate_automatic_suggestions.png')
 * Updating translations as source messages change
     * R Core Team update 1-2 times a year
     
+<br>
+
+:::{.fragment}
+[Register on <https://translate.rx.studio> to start translating!]{.larger125}<br>
+(Real name encouraged.)
+:::    
 # R Code and Documentation {.blue-bg}
 
 ## Bugs Reports and Feature Requests
@@ -386,7 +414,7 @@ digraph {
 ", width = "90%", height = "500px")
 ```
 
-## Bugzilla
+## Bugzilla {visibility="hidden"}
 
 Bugs and feature requests a tracked on R's Bugzilla <https://bugs.r-project.org>
 
@@ -394,22 +422,10 @@ Bugs and feature requests a tracked on R's Bugzilla <https://bugs.r-project.org>
 ![](images/bugzilla.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
 :::
 
-## Open Bugs
+## Open Bugs {visibility="hidden"}
 
 ::: {.center-h}
 ![](images/bugzilla_open_bugs.png){fig-alt="Screenshot of the list of open bugs on R's Bugzilla." width="80%"}
-:::
-
-## Bug 7084: A Good First Issue
-
-[Bug 7084](https://bugs.r-project.org/show_bug.cgi?id=7084) is an example of 
-a good first issue:
-
-::: {.incremental}
- - There is a simple reproducible example.
- - An [R Core developer](https://www.r-project.org/contributors.html) (Martin Maechler) agrees it is a bug.
- - There is an outline solution approved by the R Core developer.
- - The fix only requires editing R code.
 :::
  
 ## Bug 7084: The Problem
@@ -426,6 +442,8 @@ plot(1:7); text(1:2, 2:4, LETTERS[1:4])
 ```
 
 ## Bug 7084: Outline Solution
+
+The comments on the [original bug report](https://bugs.r-project.org/show_bug.cgi?id=7084) suggest an outline solution:
 
 ```r
 if (length(labels) > (n <- max(length(x), length(y))) && n >= 1) {
@@ -879,9 +897,103 @@ digraph {
 ![](images/bug7084_patch2.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
 :::
 
-# Going Further {.coral-bg}
+## View patch
 
-## Get Involved
+```
+Index: src/library/graphics/R/text.R
+===================================================================
+--- src/library/graphics/R/text.R	(revision 88304)
++++ src/library/graphics/R/text.R	(working copy)
+@@ -27,6 +27,16 @@
+ 	labels <- y; y <- NULL
+     }
+     x <- xy.coords(x,y, recycle = TRUE, setLab = FALSE)
++
++    if (is.language(labels)) {
++        labels <- as.expression(labels)
++    }
++
++    if (length(labels) > (n <- length(x$x)) && n >= 1) { 
++        labels <- labels[1:n]
++        warning("length(labels) > max(length(x), length(y)). labels truncated to length ", n, ".")
++    }
++
+     labels <- as.graphicsAnnot(labels)
+     if (!is.null(vfont))
+         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
+Index: src/library/graphics/man/text.Rd
+===================================================================
+--- src/library/graphics/man/text.Rd	(revision 88304)
++++ src/library/graphics/man/text.Rd	(working copy)
+@@ -24,7 +24,7 @@
+     language objects (names and calls) to expressions, and vectors and
+     other classed objects to character vectors by \code{\link{as.character}}.
+     If \code{labels} is longer than \code{x} and
+-    \code{y}, the coordinates are recycled to the length of \code{labels}.}
++    \code{y}, \code{labels} is truncated to \code{max(length(x), length(y))}.}
+   \item{adj}{one or two values in \eqn{[0, 1]} which specify the x
+     (and optionally y) adjustment (\sQuote{justification}) of the
+     labels, with 0 for left/bottom, 1 for right/top, and 0.5 for
+```
+
+## Bug 7084: A Good First Issue
+
+[Bug 7084](https://bugs.r-project.org/show_bug.cgi?id=7084) is an example of 
+a good first issue:
+
+::: {.incremental}
+ - There is a simple reproducible example.
+ - An [R Core developer](https://www.r-project.org/contributors.html) (Martin Maechler) agrees it is a bug.
+ - There is an outline solution approved by the R Core developer.
+ - The fix only requires editing R code.
+:::
+
+## Finding Good First issues
+
+
+:::{.columns}
+:::{.column width="48%"}
+Check out the tips in this 10-minute video (or view [slides](https://hturner.github.io/contributing-demo))
+
+:::{.center-h}
+{{< video https://www.youtube-nocookie.com/embed/VOlF8fPf9v8 width="500" height="300">}}
+:::
+:::
+:::{.column width="52%"}
+You can also attend an [R Contributor Office hour](https://contributor.r-project.org/events/office-hours/), next up
+
+ * APAC: Thu 11 Dec, 2:30 - 3:30pm UTC+11
+ * EMEA: Thu 11 Dec, 10:00 - 11:00am UTC
+ * AMER: Thu 11 Dec, 12:00 - 1:00pm UTC-8
+
+Or check the #getting-started channel on the [R Contributor Slack](https://contributor.r-project.org/slack).
+:::
+:::
+
+## R Dev Days
+
+:::{.columns}
+:::{.column width="50%"}
+![](images/rdevday_RSECon25.jpg){fig-alt="" width="100%"}
+[Top: Contributors at R Dev Day @ RSECon25]{.smaller50}
+:::
+:::{.column width="50%"}
+R Dev Days are events to work on contributions to R:
+
+ - Translations
+ - Bug fixes/feature requests
+ - Supporting infrastructure
+ 
+Plan to run **hybrid** in future, next up [R Dev Day @ New Zealand 2025, 16-17 Dec](https://pretix.eu/r-contributors/r-dev-day-nz-25/)
+
+ - Stream 1 - NZ / Americas
+ - Stream 2 - NZ / Asia-Pacific
+:::
+:::
+
+# <a href="https://contributor.r-project.org" style="color: white">https://contributor.r-project.org</a> {.lavendar-bg .larger150}
+
+## Get Involved {visibility="hidden"}
 
 * R Dev Day @ New Zealand 2025, 16-17 Dec: [pretix.eu/r-contributors/r-dev-day-nz-25/](https://pretix.eu/r-contributors/r-dev-day-nz-25/)
 * R Contributor Office hours, next up
