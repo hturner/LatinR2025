@@ -21,7 +21,7 @@ contributes:
       callout-icon: true
       title-slide-attributes:
         data-background-color: "#A499F4"
-        data-background-image: UoW_Responsive_Crest_Positive_RGB.png
+        data-background-image: UoW_Wordmark_Positive_RGB.png
         data-background-size: 6%
         data-background-position: 97.5% 5%
       preview-links: auto

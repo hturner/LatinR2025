@@ -9,3 +9,884 @@ format:
   warwickpres-revealjs: default
 ---
 
+# Brief History of R
+
+:::{.fragment}
+1992: Robert Gentleman and Ross Ihaka develop an early version of R for teaching.
+:::
+:::{.fragment}
+1995: Martin Mächler (ETH Zurich) persuades Robert and Ross to release R under a GNU public license.
+:::
+:::{.fragment}
+... User community grows to millions world wide...
+:::
+:::{.fragment}
+30 years as an open source project:  How can the community help to sustain R?
+:::
+
+# Localization {.coral-bg}
+
+## Localization
+
+By default, messages, warnings and errors are shown in the current locale.
+
+The language can be changed with `Sys.setLanguage`:
+
+```r
+> Sys.setLanguage("es")
+> months[1]
+Error in months[1] : objeto de tipo 'closure' no es subconjunto
+```
+:::{.fragment}
+If no translation is available, the English is shown:
+```r
+> help(c("mean", "sd"))
+Error en help(c("mean", "sd")): 
+  'topic' should be a name, length-one character vector or reserved word
+```
+:::
+
+## PO & POT Files
+
+## Translation via Weblate
+
+The Weblate instance at <https://translate.rx.studio> provides a user-friendly interface for contributing translations.
+
+```{r, out.width = "90%"}
+#| echo: false
+#| eval: true
+#| fig-align: "center"
+#| fig-alt: "Screenshot of Weblate hompage, showing three translation projects with some translation coverage summary statistics including % translated and number of unfinished strings."
+knitr::include_graphics('images/weblate_rxstudio.png')
+```
+
+:::{.notes}
+
+Hosts two R Project translation projects:
+
+* The R Project for Statistical Computing: packages in base R + Windows and Mac GUIS
+* The R Project recommended packages (most R packages)
+
+Not boot, codetools or survival
+:::
+
+## The R Project for Statistical Computing
+
+
+```{r, out.width = "90%"}
+#| echo: false
+#| eval: true
+#| fig-align: "center"
+#| fig-alt: "Screenshot of the R Project for Statistical Computing project on weblate, with per package translation coverage summaries"
+knitr::include_graphics('images/weblate_packages.png')
+```
+
+- Most packages have two components for strings in R and C files 
+- Also translate strings in the Windows and Mac GUIs
+
+## Languages tab
+
+```{r, out.width = "90%"}
+#| echo: false
+#| eval: true
+#| fig-align: "center"
+#| fig-alt: "Screenshot of the language tab for the R Project for Statistical Computing project, with per language translation coverage summaries"
+knitr::include_graphics('images/weblate_languages.png')
+```
+
+- 27 (written) languages in current release of R, including Spanish and Brazilian Portuguese
+
+## Translation interface
+
+```{r, out.width = "90%"}
+#| echo: false
+#| eval: true
+#| fig-align: "center"
+#| fig-alt: "Screenshot of the translation interface for translation of a specific string. Shows the english message with an empty box to type the Spanish translation"
+knitr::include_graphics('images/weblate_translation_box.png')
+```
+
+Enter the translation and "Suggest" (if unsure) or "Save and continue" (if confident).
+
+Sidebar shows alerts and any relevant terms from glossary.
+
+## Machine translation
+
+```{r, out.width = "90%"}
+#| echo: false
+#| eval: true
+#| fig-align: "center"
+#| fig-alt: "Screenshot of the translation interface for translation of a specific string. Shows the english message with an empty box to type the Spanish translation"
+knitr::include_graphics('images/weblate_automatic_suggestions.png')
+```
+
+- "Clone to translation" will copy and mark as "needs editing"
+- "Accept" will accept suggestion, save and continue
+
+## Latin American Contributions
+
+:::{.columns}
+:::{.column width="45%"}
+![](images/translators_pt_br_es.png){fig-alt="" width="100%"}
+![Top: Spanish & Brazilian Portuguese translators on Weblate. Bottom: LatinR 2023](images/latinr_2023_translation.jpg){fig-alt="" width="100%"}
+[Top: Translators on Weblate. Bottom: Translators at LatinR 2023]{.smaller50}
+:::
+:::{.column width="55%"}
+
+* Many contributors from the LatinR community on Weblate
+* Several joined via contributor events e.g. at LatinR 2022 - 2024
+* Big improvement in base R translations since Weblate set up in 2022:
+    * Spanish: from 24% to 100% translated
+    * Brazilian Portuguese: from 48% to 85% translated
+:::
+:::
+
+## Ongoing work
+
+* Translation of messages in recommended packages:
+    * Spanish: 85% translated
+    * Brazilian Portuguese: 57% translated
+* Updating translations as source messages change
+    * R Core Team update 1-2 times a year
+    
+# R Code and Documentation {.blue-bg}
+
+## Bugs Reports and Feature Requests
+
+Contributors can help in several ways:
+
+::: {columns}
+::: {.column .col-box-green style="max-height: 300px; width: 49%"}
+* Reviewing bug reports
+* Creating a "reprex"
+* Debugging R code
+* Discussing how to fix
+:::
+
+::: {.column .col-box-coral .fragment style="max-height: 300px; width: 49%"}
+* Developing a patch
+* Testing a patch
+* Debugging C code
+:::
+:::
+
+:::{.callout-warning .fragment}
+Contributions on the right require building R from source
+:::
+
+## Building R as a Barrier to Contribution
+
+* A lot of information to digest
+    * Several pages of technical documentation in ["R-admin"](https://cran.r-project.org/doc/manuals/r-devel/R-admin.html) manual
+    * Simplified instructions in [R Development Guide](https://contributor.r-project.org/rdevguide/chapters/getting_started.html), currently for Windows and Ubuntu/Fedora.
+* Hard to trouble-shoot issues
+* Many pre-requisities to install
+* Can interfere with existing R installation
+
+:::{.callout-caution .fragment}
+Can be a big time sink for ad-hoc contributors!
+:::
+
+## R Dev Container
+
+The R Dev Container provides a development environment that can be run in the browser:
+
+::: {.center-h}
+![](images/rdevenv_welcome.png){fig-alt="" width="75%"}
+:::
+
+## R Dev Container Features
+
+* Launch with GitHub Codespaces (60 hours/month free usage)
+* Fixed Linux (Ubuntu) environment, isolated from local system
+    * Pre-requisites for building R installed
+* [Docs](https://contributor.r-project.org/r-dev-env) with mini tutorials: 
+
+::: {.center-h}
+![](images/rdevenv_docs.png){fig-alt="" width="100%"}
+:::
+
+:::{.notes}
+* Helpers to simplify build commands and switch R used in R console
+:::
+
+## R Contribution Workflow
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source']
+  C [label='Rebuild R']
+  D [label='Run check']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+}
+", width = "90%", height = "500px")
+```
+
+## R Contribution Workflow: Build R
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R', style=filled, fillcolor = '#A499F4']
+  B [label='Edit source']
+  C [label='Rebuild R']
+  D [label='Run check']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Checkout R Sources I
+
+::: {.center-h}
+![](images/rdevenv_checkout.png){fig-alt="" width="85%"}
+:::
+
+## Checkout R Sources II
+
+::: {.center-h}
+![](images/rdevenv_svn_r-devel.png){fig-alt="" width="85%"}
+:::
+## Get Source of Recommended Packages
+
+::: {.center-h}
+![](images/rdevenv_recommended.png){fig-alt="" width="85%"}
+:::
+
+## Create and Move to Build Directory
+
+::: {.center-h}
+![](images/rdevenv_builddir.png){fig-alt="" width="85%"}
+:::
+
+## Configure the Build I
+
+::: {.center-h}
+![](images/rdevenv_configure.png){fig-alt="" width="85%"}
+:::
+
+## Configure the Build II
+
+::: {.center-h}
+![](images/rdevenv_configure2.png){fig-alt="" width="85%"}
+:::
+
+## Build R!
+
+::: {.center-h}
+![](images/rdevenv_make.png){fig-alt="" width="85%"}
+:::
+
+## Basic check I
+
+::: {.center-h}
+![](images/rdevenv_check.png){fig-alt="" width="85%"}
+:::
+
+## Basic check II
+
+::: {.center-h}
+![](images/rdevenv_check2.png){fig-alt="" width="85%"}
+:::
+
+## Use R-devel in R terminals
+
+::: {.center-h}
+![](images/rdevenv_whichr.png){fig-alt="" width="85%"}
+:::
+
+## R Contribution Workflow: Edit Source
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source', style=filled, fillcolor = '#A499F4']
+  C [label='Rebuild R']
+  D [label='Run check']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Bugzilla
+
+Bugs and feature requests a tracked on R's Bugzilla <https://bugs.r-project.org>
+
+::: {.center-h}
+![](images/bugzilla.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Open Bugs
+
+::: {.center-h}
+![](images/bugzilla_open_bugs.png){fig-alt="Screenshot of the list of open bugs on R's Bugzilla." width="80%"}
+:::
+
+## Bug 7084: A Good First Issue
+
+[Bug 7084](https://bugs.r-project.org/show_bug.cgi?id=7084) is an example of 
+a good first issue:
+
+::: {.incremental}
+ - There is a simple reproducible example.
+ - An [R Core developer](https://www.r-project.org/contributors.html) (Martin Maechler) agrees it is a bug.
+ - There is an outline solution approved by the R Core developer.
+ - The fix only requires editing R code.
+:::
+ 
+## Bug 7084: The Problem
+
+`text()` recycles coordinate pairs when there are more labels than points 
+```{r}
+#| echo: false
+par(mar = c(1, 1, 0, 0))
+```
+```{r}
+#| fig.width: 3
+#| fig.height: 3.5
+plot(1:7); text(1:2, 2:4, LETTERS[1:4])
+```
+
+## Bug 7084: Outline Solution
+
+```r
+if (length(labels) > (n <- max(length(x), length(y))) && n >= 1) {
+   ## use labels[1:n]  and warn about length(labels) >= .. or "omitting labels[...]"
+}
+if (length(labels) < n) { 
+  ## recycle labels to length `n`  without a warning
+}
+```
+
+## Start R I
+
+::: {.center-h}
+![](images/rdevenv_startr.png){fig-alt="" width="85%"}
+:::
+
+## Start R II
+
+::: {.center-h}
+![](images/bug7084_r-devel.png){fig-alt="" width="85%"}
+:::
+
+## Explore `text()`
+
+::: {.center-h}
+![](images/bug7084_text.png){fig-alt="" width="85%"}
+:::
+
+## Get methods
+
+::: {.center-h}
+![](images/bug7084_text.default.png){fig-alt="" width="85%"}
+:::
+
+## Finding the Source with the r-svn GitHub Mirror I
+
+::: {.center-h}
+![](images/r-svn_mirror.png){fig-alt="" width="85%"}
+:::
+
+## Finding the Source with the r-svn GitHub Mirror II
+
+::: {.center-h}
+![](images/r-svn_text.default.png){fig-alt="" width="85%"}
+:::
+
+## Finding the Source with the r-svn GitHub Mirror III
+
+::: {.center-h}
+![](images/r-svn_text.default_code.png){fig-alt="" width="85%"}
+:::
+
+## Navigating the Source Code in the Container
+
+::: {.center-h}
+![](images/bug7084_text.default_source.png){fig-alt="" width="85%"}
+:::
+
+## Debugging `text.default()`
+
+```r
+> debug(text.default)
+> plot(1:7); text(1:2, 2:4, LETTERS[1:4])
+```
+
+```
+debugging in: text.default(1:2, 2:4, LETTERS[1:4])
+debug: {
+    if (!missing(y) && (is.character(y) || is.expression(y))) {
+        labels <- y
+        y <- NULL
+    }
+    x <- xy.coords(x, y, recycle = TRUE, setLab = FALSE)
+    labels <- as.graphicsAnnot(labels)
+    if (!is.null(vfont)) 
+        vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface), 
+            fontindex = pmatch(vfont[2L], Hershey$fontindex))
+    .External.graphics(C_text, x, labels, adj, pos, offset, vfont, 
+        cex, col, font, ...)
+    invisible()
+}
+Browse[1]> 
+```
+
+## Press Enter to step through the code
+
+:::{.fragment}
+```
+debug: if (!missing(y) && (is.character(y) || is.expression(y))) {
+    labels <- y
+    y <- NULL
+}
+Browse[1]> 
+```
+:::
+:::{.fragment}
+```
+debug: x <- xy.coords(x, y, recycle = TRUE, setLab = FALSE)
+Browse[1]> 
+```
+:::
+:::{.fragment}
+```
+debug: labels <- as.graphicsAnnot(labels)
+Browse[1]>
+```
+:::
+
+## Test code at this point
+
+```
+Browse[1]> x
+$x
+[1] 1 2 1
+
+$y
+[1] 2 3 4
+
+$xlab
+NULL
+
+$ylab
+NULL
+```
+
+:::{.incremental}
+* The labels are already recycled to length `n`
+* Our warnings should be based on `x` rather than the original arguments
+:::
+
+## Return to the Source File
+
+::: {.center-h}
+![](images/bug7084_text.default_large.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Edit the Code
+
+::: {.center-h}
+![](images/bug7084_text.default_edited.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Edit the Documentation
+
+::: {.center-h}
+![](images/bug7084_text.rd_edited.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## R Contribution Workflow: Rebuild R
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source']
+  C [label='Rebuild R', style=filled, fillcolor = '#A499F4']
+  D [label='Run check']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Quit R
+
+::: {.center-h}
+![](images/bug7084_quitr.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Rebuild R
+
+::: {.center-h}
+![](images/bug7084_rebuildr.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Test reprex
+
+::: {.center-h}
+![](images/bug7084_test_reprex.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## R Contribution Workflow: Run check
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source']
+  C [label='Rebuild R']
+  D [label='Run check', style=filled, fillcolor = '#A499F4']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Basic check
+
+::: {.center-h}
+![](images/bug7084_make_check.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Fail!
+
+::: {.center-h}
+![](images/bug7084_failed_test.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Look at test output
+
+::: {.center-h}
+![](images/bug7084_test_output.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+
+## Run test code
+
+::: {.center-h}
+![](images/bug7084_failed_example.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## R Contribution Workflow: Further edits
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source', style=filled, fillcolor = '#A499F4']
+  C [label='Rebuild R']
+  D [label='Run check']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+  D -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Further edits
+
+::: {.center-h}
+![](images/bug7084_revised.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## R Contribution Workflow: Rebuild again
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source']
+  C [label='Rebuild R', style=filled, fillcolor = '#A499F4']
+  D [label='Run check']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+  D -> B
+}
+", width = "90%", height = "500px")
+```
+
+## R Contribution Workflow: Run check again
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source']
+  C [label='Rebuild R']
+  D [label='Run check', style=filled, fillcolor = '#A499F4']
+  E [label='Create patch']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+  D -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Full check
+
+::: {.center-h}
+![](images/bug7084_make_check-all.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## R Contribution Workflow: Create patch
+
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph {
+  # remove margins around diagram ?
+  graph [pad=0.1, margin=0, ranksep=0, nodesep=0.7]
+  rankdir=TB # top to bottom ranking of nodes
+  splines=true
+
+  # Set default font and shape for nodes
+  # Use circles/ellipses so back-forth arrows create circle
+  #node [fontname='Arial', shape=circle, fixedsize=true, width = 1.2]
+  node [fontname='Arial', fontsize=20, shape=ellipse, height = 1.5]
+
+  A [label='Build R']
+  B [label='Edit source']
+  C [label='Rebuild R']
+  D [label='Run check']
+  E [label='Create patch', style=filled, fillcolor = '#A499F4']
+
+  # ROWS
+  { rank=same; A; B; C; D; E }
+
+  # Main flow
+  A -> B
+  B -> C
+  C -> D
+  D -> E
+
+  # Loop back
+  C -> B
+  D -> B
+}
+", width = "90%", height = "500px")
+```
+
+## Create patch
+
+::: {.center-h}
+![](images/bug7084_patch1.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+## Download patch
+
+::: {.center-h}
+![](images/bug7084_patch2.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
+:::
+
+# Get Involved {.coral-bg}
+
+* R Dev Day @ New Zealand 2025, 16-17 Dec: [pretix.eu/r-contributors/r-dev-day-nz-25/](https://pretix.eu/r-contributors/r-dev-day-nz-25/)
+* R Contributor Office hours, next up
+    * APAC: Thursday 11 Dec, 2:30pm - 3:30pm UTC+11
+    * EMEA: Thursday 11 Dec, 10:00am - 11:00am UTC
+    * AMER: Thursday 11 Dec, 12:00pm - 1:00pm UTC-8
+* More support on [contributor.r-project.org](https://contributor.r-project.org)
+    * [Events](https://contributor.r-project.org/events/office-hours/)
+    * [R Contributor Slack](https://contributor.r-project.org/slack)
+    * [Tutorials & Demos](https://contributor.r-project.org/tutorials/)
