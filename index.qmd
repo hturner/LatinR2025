@@ -9,7 +9,7 @@ format:
   warwickpres-revealjs: default
 ---
 
-# Brief History of R
+## Brief History of R
 
 :::{.fragment}
 1992: Robert Gentleman and Ross Ihaka develop an early version of R for teaching.
@@ -879,7 +879,9 @@ digraph {
 ![](images/bug7084_patch2.png){fig-alt="Screenshot of the home page for R's Bugzilla." width="80%"}
 :::
 
-# Get Involved {.coral-bg}
+# Going Further {.coral-bg}
+
+## Get Involved
 
 * R Dev Day @ New Zealand 2025, 16-17 Dec: [pretix.eu/r-contributors/r-dev-day-nz-25/](https://pretix.eu/r-contributors/r-dev-day-nz-25/)
 * R Contributor Office hours, next up
